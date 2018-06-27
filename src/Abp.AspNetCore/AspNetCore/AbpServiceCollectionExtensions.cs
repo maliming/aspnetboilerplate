@@ -10,12 +10,14 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Abp.AspNetCore.Mvc.Providers;
+using Abp.AspNetCore.Mvc.RazorPages;
 using Abp.Json;
 using Abp.Modules;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.Extensions.Options;
@@ -52,6 +54,9 @@ namespace Abp.AspNetCore
 
             //Use DI to create view components
             services.Replace(ServiceDescriptor.Singleton<IViewComponentActivator, ServiceBasedViewComponentActivator>());
+
+            //Use DI to create PageModel
+            services.Replace(ServiceDescriptor.Singleton<IPageModelActivatorProvider, AbpServiceBasedPageModelActivatorProvider>());
 
             //Change anti forgery filters (to work proper with non-browser clients)
             services.Replace(ServiceDescriptor.Transient<AutoValidateAntiforgeryTokenAuthorizationFilter, AbpAutoValidateAntiforgeryTokenAuthorizationFilter>());

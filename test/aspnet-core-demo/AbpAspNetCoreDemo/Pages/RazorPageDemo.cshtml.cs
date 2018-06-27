@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Abp.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AbpAspNetCoreDemo.Pages
 {
-    public class RazorPageDemo : PageModel
+    public class RazorPageDemo : AbpPageModel
     {
+        public RazorPageDemo()
+        {
+            LocalizationSourceName = "AbpAspNetCoreDemoModule";
+        }
+
         public void OnGet()
         {
 
