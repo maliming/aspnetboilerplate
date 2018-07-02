@@ -18,5 +18,10 @@ namespace AbpAspNetCoreDemo.Pages
         {
 
         }
+
+        public void OnPost()
+        {
+            throw new ArgumentException("arg exception");
+        }
     }
 }

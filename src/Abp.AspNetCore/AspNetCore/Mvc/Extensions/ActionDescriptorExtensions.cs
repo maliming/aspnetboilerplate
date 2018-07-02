@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Abp.AspNetCore.Mvc.Extensions
 {
@@ -16,6 +17,28 @@ namespace Abp.AspNetCore.Mvc.Extensions
             return actionDescriptor as ControllerActionDescriptor;
         }
 
+        public static PageActionDescriptor AsPageActionDescriptor(this ActionDescriptor actionDescriptor)
+        {
+            if (!actionDescriptor.IsPageAction())
+            {
+                throw new AbpException(
+                    $"{nameof(actionDescriptor)} should be type of {typeof(PageActionDescriptor).AssemblyQualifiedName}");
+            }
+
+            return actionDescriptor as PageActionDescriptor;
+        }
+
+        public static CompiledPageActionDescriptor AsCompiledPageActionDescriptor(this ActionDescriptor actionDescriptor)
+        {
+            if (!actionDescriptor.IsCompiledPageAction())
+            {
+                throw new AbpException(
+                    $"{nameof(actionDescriptor)} should be type of {typeof(CompiledPageActionDescriptor).AssemblyQualifiedName}");
+            }
+
+            return actionDescriptor as CompiledPageActionDescriptor;
+        }
+
         public static MethodInfo GetMethodInfo(this ActionDescriptor actionDescriptor)
         {
             return actionDescriptor.AsControllerActionDescriptor().MethodInfo;
@@ -24,6 +47,16 @@ namespace Abp.AspNetCore.Mvc.Extensions
         public static bool IsControllerAction(this ActionDescriptor actionDescriptor)
         {
             return actionDescriptor is ControllerActionDescriptor;
+        }
+
+        public static bool IsPageAction(this ActionDescriptor actionDescriptor)
+        {
+            return actionDescriptor is PageActionDescriptor;
+        }
+
+        public static bool IsCompiledPageAction(this ActionDescriptor actionDescriptor)
+        {
+            return actionDescriptor is CompiledPageActionDescriptor;
         }
     }
 }
